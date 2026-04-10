@@ -8,4 +8,4 @@ Mã sinh viên: 23810310232
 ![alt text](assets/z7712297723237_d91b52109cf43b562e8ac64e76e5c3ed.jpg)
 ![alt text](assets/z7712297731899_88449c78dfdc63a44abc308edeaaecb3.jpg)
 ![alt text](assets/z7712432942735_17a87eedb63a91f3ca1698094ba2a83c.jpg)
-![alt text](assets\z7712432961829_207dbdc6e53d0a46949c093b80066a4a.jpg )
+![alt text](assets/z7712432961829_207dbdc6e53d0a46949c093b80066a4a.jpg)
