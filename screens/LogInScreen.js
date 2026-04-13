@@ -24,7 +24,7 @@ export default function LogInScreen({ navigation }) {
         <Text style={styles.label}>Email</Text>
         <TextInput 
           style={styles.input} 
-          defaultValue="imshuvo97@gmail.com" // Đặt value cứng giống hình
+          defaultValue="lanlan@gmail.com" // Đặt value cứng giống hình
           keyboardType="email-address"
         />
       </View>
@@ -47,8 +47,9 @@ export default function LogInScreen({ navigation }) {
         <Text style={styles.forgot}>Forgot Password?</Text>
       </TouchableOpacity>
 
-      <CustomButton title="Log In" onPress={() => {}} />
-
+      {/* <CustomButton title="Log In" onPress={() => {}} /> */}
+      <CustomButton title="Log In" onPress={() => navigation.navigate("Home")} />
+        
       <TouchableOpacity onPress={() => navigation.navigate("SignUp")} style={styles.linkContainer}>
         <Text style={styles.linkText}>
           Don’t have an account? <Text style={styles.linkTextHighlight}>Singup</Text>

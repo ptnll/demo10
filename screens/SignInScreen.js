@@ -42,6 +42,7 @@ export default function SignInScreen({ navigation }) {
           title="Continue with Google" 
           color="#5383EC" 
           icon={<AntDesign name="google" size={24} color="white" />} 
+          onPress={() => navigation.navigate("Home")} 
         />
         
         <View style={{ height: 15 }} /> 
@@ -50,6 +51,7 @@ export default function SignInScreen({ navigation }) {
           title="Continue with Facebook" 
           color="#4A66AC" 
           icon={<FontAwesome5 name="facebook-f" size={24} color="white" />} 
+          onPress={() => navigation.navigate("Home")} 
         />
       </View>
     </View>
