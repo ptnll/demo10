@@ -1,12 +1,12 @@
 export const COLORS = {
-  primary: '#4CAF50',
+  primary: '#53B175',
   primaryLight: '#E8F5E9',
   white: '#FFFFFF',
   black: '#1A1A1A',
   grey: '#F5F5F5',
   greyDark: '#9E9E9E',
   greyText: '#757575',
-  border: '#EEEEEE',
+  border: '#E2E2E2',
   orange: '#FF7043',
   yellow: '#FFF9C4',
   pink: '#FCE4EC',
@@ -17,6 +17,11 @@ export const COLORS = {
   cream: '#FFF8E1',
   star: '#FFA726',
   red: '#EF5350',
+  text: '#181725',
+  subText: '#7C7C7C',
+  price: '#181725',
+  lightGray: '#F2F3F2',
+  tabInactive: '#181725',
 };
 
 export const FONTS = {
@@ -24,7 +29,15 @@ export const FONTS = {
   medium: 'System',
   bold: 'System',
 };
-
+export const SHADOWS = {
+  light: {
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 3,
+  },
+};
 export const SIZES = {
   xs: 10,
   sm: 12,
@@ -38,4 +51,10 @@ export const SIZES = {
   radiusFull: 50,
   padding: 16,
   paddingLg: 24,
+  borderRadius: 15,
+  padding: 20,
+  font: 14,
+  small: 12,
+  medium: 16,
+  large: 18,
 };

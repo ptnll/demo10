@@ -75,51 +75,34 @@ function CategoryCard({ item, onPress }) {
 export default function ExploreScreen({ navigation }) {
   const [search, setSearch] = useState('');
 
-  const handleCategoryPress = (categoryName) => {
-    if (categoryName.includes('Beverages')) {
+  const handleCategoryPress = (category) => {
+    // Chuyen den man hinh tuong ung dua tren ID hoac Name
+    if (category.id === '6') {
       navigation.navigate('Beverages');
     }
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor={COLORS.white} />
-
-      {/* Title */}
-      <View style={styles.header}>
-        <Text style={styles.title}>Find Products</Text>
-      </View>
-
-      {/* Search Bar */}
-      <View style={styles.searchContainer}>
-        <Text style={styles.searchIcon}>🔍</Text>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search Store"
-          placeholderTextColor={COLORS.greyDark}
-          value={search}
-          onChangeText={setSearch}
-        />
-      </View>
-
-      {/* Categories Grid */}
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.gridContainer}
-      >
+      {/* ... Header va Search Input giu nguyen ... */}
+      
+      <ScrollView contentContainerStyle={styles.gridContainer}>
         <View style={styles.grid}>
           {categories.map((item) => (
             <CategoryCard
               key={item.id}
               item={item}
-              onPress={() => handleCategoryPress(item.name)}
+              onPress={() => handleCategoryPress(item)}
             />
           ))}
         </View>
-        <View style={{ height: 20 }} />
       </ScrollView>
 
-      <BottomTabBar active="Explore" navigation={navigation} />
+      {/* Dung BottomTabBar moi cua ban */}
+      <BottomTabBar 
+        activeTab="explore" 
+        onTabPress={(key) => navigation.navigate(key)} 
+      />
     </SafeAreaView>
   );
 }

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useState, useMemo } from 'react'; // Thêm useMemo vào đây
 import {
   View,
   Text,
@@ -81,6 +82,18 @@ function ProductCard({ item, onPress }) {
 export default function HomeScreen({ navigation }) {
   const [search, setSearch] = useState('');
 
+  const filteredOffers = useMemo(() => {
+    return exclusiveOffers.filter(item => 
+      item.name.toLowerCase().includes(search.toLowerCase())
+    );
+  }, [search]);
+
+  const filteredBestSelling = useMemo(() => {
+    return bestSelling.filter(item => 
+      item.name.toLowerCase().includes(search.toLowerCase())
+    );
+  }, [search]);
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor={COLORS.white} />
@@ -135,45 +148,35 @@ export default function HomeScreen({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.horizontalList}
-        >
-          {exclusiveOffers.map((item) => (
-            <ProductCard
-              key={item.id}
-              item={item}
-              onPress={() =>
-                navigation.navigate('ProductDetail', { product: item })
-              }
-            />
-          ))}
-        </ScrollView>
+        {/* Exclusive Offers */}
+<ScrollView
+  horizontal
+  showsHorizontalScrollIndicator={false}
+  contentContainerStyle={styles.horizontalList}
+>
+  {filteredOffers.map((item) => (
+    <ProductCard
+      key={item.id}
+      item={item}
+      onPress={() => navigation.navigate('ProductDetail', { product: item })}
+    />
+  ))}
+</ScrollView>
 
-        {/* Best Selling */}
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Best Selling</Text>
-          <TouchableOpacity>
-            <Text style={styles.seeAll}>See all</Text>
-          </TouchableOpacity>
-        </View>
-
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.horizontalList}
-        >
-          {bestSelling.map((item) => (
-            <ProductCard
-              key={item.id}
-              item={item}
-              onPress={() =>
-                navigation.navigate('ProductDetail', { product: item })
-              }
-            />
-          ))}
-        </ScrollView>
+{/* Best Selling */}
+<ScrollView
+  horizontal
+  showsHorizontalScrollIndicator={false}
+  contentContainerStyle={styles.horizontalList}
+>
+  {filteredBestSelling.map((item) => (
+    <ProductCard
+      key={item.id}
+      item={item}
+      onPress={() => navigation.navigate('ProductDetail', { product: item })}
+    />
+  ))}
+</ScrollView>
 
         <View style={{ height: 20 }} />
       </ScrollView>

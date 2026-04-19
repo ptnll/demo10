@@ -1,89 +1,67 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { COLORS, SIZES } from '../constants/theme';
 
 const tabs = [
-  { name: 'Shop', icon: '🏪' },
-  { name: 'Explore', icon: '🔍' },
-  { name: 'Cart', icon: '🛒' },
-  { name: 'Favourite', icon: '🤍' },
-  { name: 'Account', icon: '👤' },
+  { key: 'shop', label: 'Shop', icon: 'grid-outline', iconActive: 'grid' },
+  { key: 'explore', label: 'Explore', icon: 'search-outline', iconActive: 'search' },
+  { key: 'cart', label: 'Cart', icon: 'cart-outline', iconActive: 'cart' },
+  { key: 'favourite', label: 'Favourite', icon: 'heart-outline', iconActive: 'heart' },
+  { key: 'account', label: 'Account', icon: 'person-outline', iconActive: 'person' },
 ];
 
-export default function BottomTabBar({ active = 'Shop', navigation }) {
+const BottomTabBar = ({ activeTab = 'explore', onTabPress }) => {
   return (
     <View style={styles.container}>
       {tabs.map((tab) => {
-        const isActive = tab.name === active;
+        const isActive = activeTab === tab.key;
         return (
           <TouchableOpacity
-            key={tab.name}
+            key={tab.key}
             style={styles.tab}
-            onPress={() => {
-              if (tab.name === 'Shop') navigation?.navigate('Home');
-              else if (tab.name === 'Explore') navigation?.navigate('Explore');
-            }}
+            onPress={() => onTabPress && onTabPress(tab.key)}
+            activeOpacity={0.7}
           >
-            <Text style={[styles.icon, isActive && styles.iconActive]}>
-              {tab.icon}
-            </Text>
+            <Ionicons
+              name={isActive ? tab.iconActive : tab.icon}
+              size={22}
+              color={isActive ? COLORS.primary : COLORS.tabInactive}
+            />
             <Text style={[styles.label, isActive && styles.labelActive]}>
-              {tab.name}
+              {tab.label}
             </Text>
-            {isActive && <View style={styles.indicator} />}
           </TouchableOpacity>
         );
       })}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     backgroundColor: COLORS.white,
-    paddingVertical: 10,
     paddingBottom: 20,
+    paddingTop: 10,
     borderTopWidth: 1,
     borderTopColor: COLORS.border,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: -2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 8,
-    elevation: 10,
+    justifyContent: 'space-around',
   },
   tab: {
-    flex: 1,
     alignItems: 'center',
-    gap: 4,
-    position: 'relative',
-  },
-  icon: {
-    fontSize: 20,
-    opacity: 0.4,
-  },
-  iconActive: {
-    opacity: 1,
+    justifyContent: 'center',
+    flex: 1,
   },
   label: {
-    fontSize: SIZES.xs,
-    color: COLORS.greyDark,
+    fontSize: SIZES.small,
+    color: COLORS.tabInactive,
+    marginTop: 4,
   },
   labelActive: {
     color: COLORS.primary,
     fontWeight: '600',
   },
-  indicator: {
-    position: 'absolute',
-    bottom: -10,
-    width: 4,
-    height: 4,
-    borderRadius: 2,
-    backgroundColor: COLORS.primary,
-  },
 });
+
+export default BottomTabBar;
