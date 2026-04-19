@@ -1,75 +1,52 @@
 import React, { useState, useMemo } from 'react';
-import { View, ScrollView, SafeAreaView, StyleSheet, FlatList } from 'react-native';
+import { View, ScrollView, SafeAreaView, StyleSheet, StatusBar } from 'react-native';
 import { products } from '../constants/data';
 import { COLORS, SIZES } from '../constants/theme';
 import SearchBar from '../components/SearchBar';
 import FilterModal from '../components/FilterModal';
-import ProductCard from '../components/ProductCard'; // Dùng card mới
+import ProductCard from '../components/ProductCard';
 import BottomTabBar from '../components/BottomTabBar';
+import { Dimensions } from 'react-native';
+import { View, ScrollView, SafeAreaView, StyleSheet, StatusBar } from 'react-native';
+
+
+const { width } = Dimensions.get('window');
+const CARD_SIZE = (width - 32 - 12) / 2;
 
 export default function SearchScreen({ navigation }) {
   const [query, setQuery] = useState('');
-  const [isFilterVisible, setIsFilterVisible] = useState(false);
   const [filters, setFilters] = useState({ categories: [], brands: [] });
 
   const filteredProducts = useMemo(() => {
     let result = products;
 
-    // 1. Search logic
     if (query.trim()) {
       const text = query.toLowerCase();
-      result = result.filter(p => p.name.toLowerCase().includes(text));
+      result = result.filter(p =>
+        p.name.toLowerCase().includes(text)
+      );
     }
 
-    // 2. Filter logic (Khớp với ID trong FilterModal)
     if (filters.categories.length > 0) {
-      // Giả sử categoryList trong Modal là ['eggs', 'noodles'...]
-      // Lan cần đảm bảo product.categoryId hoặc product.type khớp với các text này
-      result = result.filter(p => filters.categories.includes(p.categoryId));
+      result = result.filter(p =>
+        filters.categories.includes(p.categoryId)
+      );
     }
 
     return result;
   }, [query, filters]);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
-      <SearchBar 
-        value={query}
-        onChangeText={setQuery}
-        onClear={() => setQuery('')}
-        onFilterPress={() => setIsFilterVisible(true)}
-      />
-
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.grid}>
-          {filteredProducts.map(item => (
-            <View key={item.id} style={{ width: '50%' }}>
-              <ProductCard item={item} />
-            </View>
-          ))}
-        </View>
-      </ScrollView>
-
-      <FilterModal 
-        visible={isFilterVisible}
-        onClose={() => setIsFilterVisible(false)}
-        selectedCategories={filters.categories}
-        selectedBrands={filters.brands}
-        onApply={(cats, brands) => {
-          setFilters({ categories: cats, brands: brands });
-          setIsFilterVisible(false);
-        }}
-      />
-
-      <BottomTabBar activeTab="explore" onTabPress={(key) => navigation.navigate(key)} />
-    </SafeAreaView>
+    <FlatList
+      data={filteredProducts}
+      renderItem={({ item }) => <ProductCard item={item} />}
+    />
   );
 }
 
+
 const styles = StyleSheet.create({
-  scrollContainer: { paddingBottom: 100 },
   container: { flex: 1, backgroundColor: COLORS.white },
-  grid: { flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 8 },
 
   // Search Row
   searchRow: {

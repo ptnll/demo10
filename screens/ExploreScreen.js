@@ -100,9 +100,10 @@ export default function ExploreScreen({ navigation }) {
 
       {/* Dung BottomTabBar moi cua ban */}
       <BottomTabBar 
-        activeTab="explore" 
-        onTabPress={(key) => navigation.navigate(key)} 
-      />
+  activeTab="cart" 
+  onTabPress={(key) => navigation.navigate(key)} 
+/>
+
     </SafeAreaView>
   );
 }

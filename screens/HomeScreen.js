@@ -162,6 +162,12 @@ export default function HomeScreen({ navigation }) {
     />
   ))}
 </ScrollView>
+  <View style={styles.sectionHeader}>
+  <Text style={styles.sectionTitle}>Best Selling</Text>
+  <TouchableOpacity>
+    <Text style={styles.seeAll}>See all</Text>
+  </TouchableOpacity>
+</View>
 
 {/* Best Selling */}
 <ScrollView
@@ -181,7 +187,8 @@ export default function HomeScreen({ navigation }) {
         <View style={{ height: 20 }} />
       </ScrollView>
 
-      <BottomTabBar active="Shop" navigation={navigation} />
+     <BottomTabBar activeTab="home" onTabPress={(key) => navigation.navigate(key)} />
+
     </SafeAreaView>
   );
 }

@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+import { CartContext } from '../context/CartContext';
 import React, { useState } from 'react';
 import {
   View,
@@ -53,7 +55,10 @@ export default function ProductDetailScreen({ navigation, route }) {
   const [isFav, setIsFav] = useState(false);
   const [showDetail, setShowDetail] = useState(true);
 
-  const price = PRODUCT_INFO.price * quantity;
+  const basePrice = product?.price || PRODUCT_INFO.price;
+  const price = basePrice * quantity;
+  const { addToCart } = useContext(CartContext);
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -167,7 +172,14 @@ export default function ProductDetailScreen({ navigation, route }) {
 
       {/* Add To Basket */}
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.addToBasketBtn}>
+        <TouchableOpacity style={styles.addToBasketBtn} onPress={() =>
+    addToCart({
+      ...(product ?? PRODUCT_INFO),
+      quantity
+    })
+  }
+>
+
           <Text style={styles.addToBasketText}>Add To Basket</Text>
         </TouchableOpacity>
       </View>

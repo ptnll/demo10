@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -11,9 +11,18 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, SIZES } from '../constants/theme';
 
+
 const FilterModal = ({ visible, onClose, onApply, selectedCategories, selectedBrands }) => {
   const [categories, setCategories] = useState(selectedCategories);
   const [brands, setBrands] = useState(selectedBrands);
+
+  useEffect(() => {
+  setCategories(selectedCategories);
+}, [selectedCategories]);
+
+useEffect(() => {
+  setBrands(selectedBrands);
+}, [selectedBrands]);
 
   const categoryList = ['eggs', 'noodles', 'pasta', 'condiments'];
   const brandList = ['individual', 'cocola', 'ifad', 'kazi'];

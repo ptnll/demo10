@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+
 import {
   View,
   Text,
@@ -18,12 +19,14 @@ const ProductCard = ({ item }) => {
 
   const handleAdd = () => {
     Animated.sequence([
-      Animated.spring(scale, { toValue: 0.85, useNativeDriver: true, speed: 30 }),
-      Animated.spring(scale, { toValue: 1, useNativeDriver: true, speed: 20 }),
+        Animated.spring(scale, { toValue: 0.85, useNativeDriver: true }),
+        Animated.spring(scale, { toValue: 1, useNativeDriver: true }),
     ]).start();
-    setAdded(!added);
+
+    setAdded(true); // luôn true, không toggle
     addToCart(item);
-  };
+    };
+
 
   return (
     <View style={styles.card}>
@@ -33,7 +36,8 @@ const ProductCard = ({ item }) => {
 
       <View style={styles.info}>
         <Text style={styles.name} numberOfLines={2}>{item.name}</Text>
-        <Text style={styles.description}>{item.description}</Text>
+        <Text style={styles.description}>{item.description || ''}</Text>
+
       </View>
 
       <View style={styles.footer}>
