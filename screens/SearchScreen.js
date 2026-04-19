@@ -7,7 +7,7 @@ import FilterModal from '../components/FilterModal';
 import ProductCard from '../components/ProductCard';
 import BottomTabBar from '../components/BottomTabBar';
 import { Dimensions } from 'react-native';
-import { View, ScrollView, SafeAreaView, StyleSheet, StatusBar } from 'react-native';
+import { FlatList } from 'react-native';
 
 
 const { width } = Dimensions.get('window');

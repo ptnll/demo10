@@ -6,6 +6,7 @@ import BottomTabBar from '../components/BottomTabBar';
 import FilterModal from '../components/FilterModal';
 import { COLORS, SIZES } from '../constants/theme';
 import { products } from '../constants/data';
+
 const CARD_SIZE = (SIZES.width - SIZES.padding * 2 - 12) / 2;
 
 export default function SearchScreen({ navigation }) {
@@ -14,12 +15,10 @@ export default function SearchScreen({ navigation }) {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedBrands, setSelectedBrands] = useState([]);
 
-  // Logic loc san pham
-  // Logic loc san pham - Da fix selectedBrands
   const filteredProducts = useMemo(() => {
     let result = products;
 
-    // 1. Loc theo tu khoa tim kiem
+    // 1. Lọc theo search query (tên hoặc category name)
     if (searchQuery.trim()) {
       const text = searchQuery.toLowerCase().trim();
       result = result.filter(p => 
@@ -28,21 +27,18 @@ export default function SearchScreen({ navigation }) {
       );
     }
 
-    // 2. Loc theo Danh muc (Category)
+    // 2. Lọc theo Categories (Dùng ID cho chuẩn)
     if (selectedCategories.length > 0) {
-      result = result.filter(p => 
-        selectedCategories.includes(p.category) || 
-        selectedCategories.includes(p.categoryId)
-      );
+      result = result.filter(p => selectedCategories.includes(p.categoryId));
     }
 
-    // 3. Loc theo Thuong hieu (Brand) - FIX O DAY
+    // 3. Lọc theo Brands
     if (selectedBrands.length > 0) {
-      result = result.filter(p => selectedBrands.includes(p.brand));
+      result = result.filter(p => selectedBrands.includes(p.brandId) || selectedBrands.includes(p.brand));
     }
 
     return result;
-  }, [searchQuery, selectedCategories, selectedBrands]); // Nho them selectedBrands vao dependency array
+  }, [searchQuery, selectedCategories, selectedBrands]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -81,11 +77,7 @@ export default function SearchScreen({ navigation }) {
         }}
       />
 
-      <BottomTabBar 
-  activeTab="cart" 
-  onTabPress={(key) => navigation.navigate(key)} 
-/>
-
+      <BottomTabBar activeTab="explore" onTabPress={(key) => navigation.navigate(key)} />
     </SafeAreaView>
   );
 }
